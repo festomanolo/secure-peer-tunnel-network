@@ -24,58 +24,50 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
   };
 
   return (
-    <Card className={`glass-card transition-all duration-500 ${
-      status.connected ? 'neon-glow-green' : ''
+    <Card className={`floating-card transition-all duration-500 ${
+      status.connected ? 'liquid-flow' : ''
     }`}>
-      <CardContent className="p-8">
-        <div className="text-center space-y-6">
+      <CardContent className="p-12">
+        <div className="text-center space-y-8">
           {/* Connection Icon */}
           <div className="relative inline-flex">
-            <div className={`w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500 ${
+            <div className={`w-32 h-32 rounded-full flex items-center justify-center smooth-transition ${
               status.connected 
-                ? 'success-gradient neon-glow-green' 
-                : 'bg-secondary/50'
+                ? 'bg-foreground text-background status-pulse' 
+                : 'liquid-glass text-foreground'
             }`}>
               {isConnecting ? (
-                <Loader2 className="h-12 w-12 text-white animate-spin" />
+                <Loader2 className="h-16 w-16 animate-spin" />
               ) : status.connected ? (
-                <Wifi className="h-12 w-12 text-white" />
+                <Wifi className="h-16 w-16" />
               ) : (
-                <WifiOff className="h-12 w-12 text-muted-foreground" />
+                <WifiOff className="h-16 w-16" />
               )}
             </div>
-            
-            {/* Pulse rings when connected */}
-            {status.connected && (
-              <>
-                <div className="absolute inset-0 w-24 h-24 rounded-full border-2 border-accent/30 animate-ping" />
-                <div className="absolute inset-0 w-24 h-24 rounded-full border border-accent/20 animate-pulse" />
-              </>
-            )}
           </div>
 
           {/* Status Text */}
-          <div className="space-y-2">
-            <h2 className={`text-2xl font-bold transition-colors duration-300 ${
-              status.connected ? 'text-accent' : 'text-muted-foreground'
+          <div className="space-y-3">
+            <h2 className={`text-3xl font-light smooth-transition ${
+              status.connected ? 'text-foreground' : 'text-muted-foreground'
             }`}>
               {isConnecting ? 'Connecting...' : status.connected ? 'Connected' : 'Disconnected'}
             </h2>
             
             {status.connected && status.location && (
-              <div className="space-y-1">
-                <p className="text-muted-foreground">Connected to</p>
-                <p className="font-mono text-primary">{status.server}</p>
-                <p className="text-sm text-muted-foreground">{status.location}</p>
+              <div className="space-y-2">
+                <p className="text-muted-foreground font-light">Connected to</p>
+                <p className="font-mono text-xl font-medium text-foreground">{status.server}</p>
+                <p className="text-muted-foreground">{status.location}</p>
               </div>
             )}
           </div>
 
           {/* Connection Time */}
           {status.connected && (
-            <div className="bg-secondary/30 rounded-lg p-3 inline-block">
-              <div className="text-sm text-muted-foreground">Connection Time</div>
-              <div className="font-mono text-lg text-primary">{formatUptime(status.uptime)}</div>
+            <div className="floating-card p-4 inline-block">
+              <div className="text-sm text-muted-foreground font-light">Connection Time</div>
+              <div className="font-mono text-2xl font-medium text-foreground">{formatUptime(status.uptime)}</div>
             </div>
           )}
 
@@ -84,13 +76,13 @@ const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
             onClick={onConnect}
             disabled={isConnecting}
             size="lg"
-            className={`w-48 h-12 font-semibold transition-all duration-300 ${
+            className={`liquid-button w-56 h-14 text-lg font-medium ${
               status.connected
-                ? 'bg-destructive hover:bg-destructive/80'
-                : 'cyber-gradient neon-glow hover:shadow-lg'
+                ? 'bg-destructive text-destructive-foreground hover:bg-destructive/90'
+                : 'bg-foreground text-background hover:bg-foreground/90'
             }`}
           >
-            <Power className="h-5 w-5 mr-2" />
+            <Power className="h-6 w-6 mr-3" />
             {isConnecting ? 'Connecting...' : status.connected ? 'Disconnect' : 'Quick Connect'}
           </Button>
         </div>

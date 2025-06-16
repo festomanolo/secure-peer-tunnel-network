@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Shield, Power, Zap, Globe, Activity, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,6 +7,7 @@ import ConnectionStatus from './ConnectionStatus';
 import ServerSelector from './ServerSelector';
 import SecurityPanel from './SecurityPanel';
 import StatsPanel from './StatsPanel';
+import ThemeToggle from './ThemeToggle';
 
 export interface VPNStatus {
   connected: boolean;
@@ -85,21 +85,23 @@ const VPNDashboard = () => {
   }, [vpnStatus.connected]);
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="text-center space-y-2">
-          <div className="flex items-center justify-center space-x-3">
+    <div className="min-h-screen bg-background p-6 smooth-transition">
+      <div className="max-w-7xl mx-auto space-y-8">
+        {/* Header with Theme Toggle */}
+        <div className="text-center space-y-4 relative">
+          <div className="absolute top-0 right-0">
+            <ThemeToggle />
+          </div>
+          <div className="flex items-center justify-center space-x-4">
             <div className="relative">
-              <Shield className="h-8 w-8 text-primary" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full animate-pulse" />
+              <Shield className="h-10 w-10 text-foreground status-pulse" />
             </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <h1 className="text-4xl font-light liquid-text">
               P2P VPN Shield
             </h1>
           </div>
-          <p className="text-muted-foreground">
-            Ultimate Peer-to-Peer VPN Protection
+          <p className="text-muted-foreground font-light text-lg">
+            Ultimate Peer-to-Peer Protection
           </p>
         </div>
 
@@ -111,7 +113,7 @@ const VPNDashboard = () => {
         />
 
         {/* Feature Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Server Selection */}
           <div className="lg:col-span-1">
             <ServerSelector connected={vpnStatus.connected} />
@@ -133,20 +135,23 @@ const VPNDashboard = () => {
         </div>
 
         {/* Bottom Status Bar */}
-        <Card className="glass-card">
-          <CardContent className="p-4">
+        <Card className="floating-card">
+          <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-6">
                 <div className="flex items-center space-x-2">
-                  <Lock className="h-4 w-4 text-accent" />
-                  <span className="text-sm font-mono">{vpnStatus.encryption}</span>
+                  <Lock className="h-4 w-4 text-foreground" />
+                  <span className="text-sm font-mono font-medium">{vpnStatus.encryption}</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Activity className="h-4 w-4 text-primary" />
-                  <span className="text-sm">Zero Logs Policy</span>
+                  <Activity className="h-4 w-4 text-foreground" />
+                  <span className="text-sm font-medium">Zero Logs Policy</span>
                 </div>
               </div>
-              <Badge variant={vpnStatus.connected ? "default" : "secondary"} className="font-mono">
+              <Badge 
+                variant={vpnStatus.connected ? "default" : "secondary"} 
+                className="font-mono font-medium px-4 py-1 rounded-xl"
+              >
                 {vpnStatus.connected ? 'SECURED' : 'DISCONNECTED'}
               </Badge>
             </div>

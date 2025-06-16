@@ -3,50 +3,68 @@
 @tailwind components;
 @tailwind utilities;
 
-/* VPN App Custom Design System */
+/* Liquid Glass VPN App Design System */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Light theme */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 1rem;
+    
+    /* Glass effects */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: rgba(0, 0, 0, 0.1);
+    --ripple-color: rgba(0, 0, 0, 0.1);
+  }
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 195 100% 50%;
-    --primary-foreground: 222.2 84% 4.9%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 142 76% 36%;
-    --accent-foreground: 210 40% 98%;
-
+  .dark {
+    /* Dark theme */
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 195 100% 50%;
-
-    --vpn-cyan: 195 100% 50%;
-    --vpn-green: 142 76% 50%;
-    --vpn-red: 0 84% 60%;
-    --vpn-yellow: 48 96% 53%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
     
-    --gradient-cyber: linear-gradient(135deg, #00D4FF 0%, #091A7A 100%);
-    --gradient-success: linear-gradient(135deg, #00FF88 0%, #00CC66 100%);
-    --gradient-danger: linear-gradient(135deg, #FF0080 0%, #CC0066 100%);
-    
-    --radius: 0.75rem;
+    /* Glass effects for dark theme */
+    --glass-bg: rgba(0, 0, 0, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: rgba(0, 0, 0, 0.3);
+    --ripple-color: rgba(255, 255, 255, 0.1);
   }
 
   * {
@@ -54,10 +72,10 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans transition-colors duration-500;
     font-family: 'Inter', sans-serif;
-    background: radial-gradient(ellipse at top, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
+    background: radial-gradient(ellipse at top, transparent 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, transparent 0%, transparent 50%),
                 hsl(var(--background));
   }
 
@@ -67,36 +85,197 @@
 }
 
 @layer utilities {
-  .glass-card {
-    @apply bg-card/40 backdrop-blur-xl border border-white/10 shadow-2xl;
+  /* Liquid Glass Effects */
+  .liquid-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    box-shadow: 
+      0 8px 32px var(--glass-shadow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  .neon-glow {
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1);
+  .liquid-glass:hover {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px) saturate(200%);
+    box-shadow: 
+      0 12px 40px var(--glass-shadow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
   }
   
-  .neon-glow-green {
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), 0 0 40px rgba(0, 255, 136, 0.1);
+  /* Floating Glass Cards */
+  .floating-card {
+    @apply liquid-glass rounded-3xl;
+    position: relative;
+    overflow: hidden;
   }
   
-  .cyber-gradient {
-    background: var(--gradient-cyber);
+  .floating-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    transition: left 0.5s;
   }
   
-  .success-gradient {
-    background: var(--gradient-success);
+  .floating-card:hover::before {
+    left: 100%;
   }
   
-  .animate-pulse-glow {
+  /* Ripple Effect */
+  .ripple {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .ripple::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: var(--ripple-color);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  .ripple:active::before {
+    width: 300px;
+    height: 300px;
+  }
+  
+  /* Status Indicators */
+  .status-pulse {
     animation: pulse-glow 2s ease-in-out infinite alternate;
   }
   
   @keyframes pulse-glow {
     from {
-      box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+      box-shadow: 0 0 20px currentColor;
+      transform: scale(1);
     }
     to {
-      box-shadow: 0 0 30px rgba(0, 212, 255, 0.4), 0 0 60px rgba(0, 212, 255, 0.1);
+      box-shadow: 0 0 40px currentColor, 0 0 60px currentColor;
+      transform: scale(1.05);
     }
+  }
+  
+  /* Liquid Flow Animation */
+  .liquid-flow {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .liquid-flow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    animation: flow 2s ease-in-out infinite;
+  }
+  
+  @keyframes flow {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: 100%; }
+  }
+  
+  /* Button Enhancements */
+  .liquid-button {
+    @apply ripple liquid-glass rounded-2xl font-medium transition-all duration-300;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .liquid-button:hover {
+    transform: translateY(-1px) scale(1.02);
+  }
+  
+  .liquid-button:active {
+    transform: translateY(0) scale(0.98);
+  }
+  
+  /* Theme Toggle */
+  .theme-toggle {
+    @apply liquid-glass rounded-full p-3 transition-all duration-500;
+    position: relative;
+  }
+  
+  .theme-toggle:hover {
+    transform: rotate(180deg);
+  }
+  
+  /* Typography Enhancements */
+  .liquid-text {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--foreground)),
+      hsl(var(--muted-foreground))
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* Smooth Transitions */
+  .smooth-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Glass Progress Bar */
+  .glass-progress {
+    @apply liquid-glass rounded-full h-2 overflow-hidden;
+    position: relative;
+  }
+  
+  .glass-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, currentColor, transparent);
+    border-radius: inherit;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .glass-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.5),
+      transparent
+    );
+    animation: progress-shine 2s ease-in-out infinite;
+  }
+  
+  @keyframes progress-shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
   }
 }
